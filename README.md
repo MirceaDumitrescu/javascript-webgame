@@ -7,9 +7,9 @@
 
 Add Description Here...
 
-[Github Page](https://github.com/MirceaDumitrescu/javascript-webgame)
-[Github Kanban Page](https://github.com/MirceaDumitrescu/javascript-webgame/projects/1)
-[Wiki Page](https://github.com/MirceaDumitrescu/javascript-webgame/wiki)
+- [Github Page](https://github.com/MirceaDumitrescu/javascript-webgame)
+- [Github Kanban Page](https://github.com/MirceaDumitrescu/javascript-webgame/projects/1)
+- [Wiki Page](https://github.com/MirceaDumitrescu/javascript-webgame/wiki)
 
 ### Map Creation
 
