@@ -1,51 +1,17 @@
+# How to install the game
 
-# Game Name: Add name here...
+> Clone the develop branch
+> Make sure you have node 16.13.1 installed
+> Make sure you have Prettier extension and activate format on save
 
-> Add Logo Here
+Then run:
 
-## Description
+    npm install
 
-Add Description Here...
+Then run:
 
-- [Github Page](https://github.com/MirceaDumitrescu/javascript-webgame)
-- [Github Kanban Page](https://github.com/MirceaDumitrescu/javascript-webgame/projects/1)
-- [Wiki Page](https://github.com/MirceaDumitrescu/javascript-webgame/wiki)
+    npm start
 
-### Map Creation
+## Current state of the game
 
-> To be discussed
-
-- [ ] Downloads and Setup
-- [ ] Find Assets (Theme)
-- [ ] Download Tiles
-- [ ] Import into Project
-- [ ] Create game design file
-- [ ] Tile Layering for all maps
-- [ ] Map details and placement of props
-- [ ] Foreground Layers & Collisions
-- [ ] Exporting Project
-
-### Game Design
-
-> To be discussed
-- [ ] Theme of the game
-- [ ] Basic functionalities
-- [ ] Scope of game
-- [ ] Sprint intervals
-- [ ] Team Management & Taks Allocation
-- [ ] Storyline ?
-- [ ] v1.0 requirments
-
-### Player and Map Development
-
-> To be discussed
-- [ ] Project initial Setup
-- [ ] Import and render map
-- [ ] Player Creation
-- [ ] Movement system
-- [ ] Adding Collisions
-- [ ] Foreground Objects
-
-# Current Team Members
-
-    Mircea Dumitrescu [ Role: xxxxxx ]
+No backend yet Still in planning stage
