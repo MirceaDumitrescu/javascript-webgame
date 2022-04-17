@@ -1,0 +1,28 @@
+{
+  "name": "javascript-webgame",
+  "version": "1.0.0",
+  "description": "> Add Logo Here",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MirceaDumitrescu/javascript-webgame.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MirceaDumitrescu/javascript-webgame/issues"
+  },
+  "homepage": "https://github.com/MirceaDumitrescu/javascript-webgame#readme",
+  "devDependencies": {
+    "eslint": "^8.13.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "prettier": "^2.6.2",
+    "scss": "^0.2.4",
+    "typescript": "^4.6.3"
+  }
+}
