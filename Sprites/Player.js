@@ -1,10 +1,9 @@
 class Player {
-  constructor({ ctx, position, frames = { max: 1 }, sprite, velocity }) {
+  constructor({ ctx, position, frames = { max: 1 }, sprite }) {
     this.position = position;
     this.frames = frames;
     this.sprite = sprite;
     this.ctx = ctx;
-    this.velocity = velocity;
     this.moving = true;
     this.sprite.onload = () => {
       this.height = this.sprite.height;
@@ -57,22 +56,6 @@ class Player {
       this.position.y < object.y + object.height &&
       this.position.y + this.height > object.y
     );
-  }
-
-  moveUp() {
-    this.position.y -= this.velocity;
-  }
-
-  moveDown() {
-    this.position.y += this.velocity;
-  }
-
-  moveLeft() {
-    this.position.x -= this.velocity;
-  }
-
-  moveRight() {
-    this.position.x += this.velocity;
   }
 }
 

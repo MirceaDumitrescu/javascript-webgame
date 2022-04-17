@@ -1,16 +1,20 @@
-const movement = (keysPressed, player, boundaries) => {
+const movement = (keysPressed, player, backgroundImages, boundaries) => {
+
+  
   /*
    * Checks movement up
    */
+
   if (keysPressed.up) {
     const direction = {
       x: 0,
       y: 3
     };
     player.checkCollisions(boundaries, direction);
-
     if (player.moving) {
-      player.moveUp();
+      backgroundImages.forEach((image) => {
+        image.moveUp();
+      });
     }
   }
 
@@ -25,7 +29,9 @@ const movement = (keysPressed, player, boundaries) => {
     player.checkCollisions(boundaries, direction);
 
     if (player.moving) {
-      player.moveDown();
+      backgroundImages.forEach((image) => {
+        image.moveDown();
+      });
     }
   }
 
@@ -40,7 +46,9 @@ const movement = (keysPressed, player, boundaries) => {
     player.checkCollisions(boundaries, direction);
 
     if (player.moving) {
-      player.moveLeft();
+      backgroundImages.forEach((image) => {
+        image.moveLeft();
+      });
     }
   }
 
@@ -55,7 +63,9 @@ const movement = (keysPressed, player, boundaries) => {
     player.checkCollisions(boundaries, direction);
 
     if (player.moving) {
-      player.moveRight();
+      backgroundImages.forEach((image) => {
+        image.moveRight();
+      });
     }
   }
 };

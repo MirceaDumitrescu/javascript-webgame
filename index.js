@@ -1,20 +1,18 @@
 import Map from './Sprites/Map.js';
 import Player from './Sprites/Player.js';
 import movement from './Movement/movement.js';
-import {canvas, ctx, offset} from './data/config.js';
-import {boundaries} from './data/boundariesMapped.js';
-import {keysPressed} from './data/eventListeners.js';
-
-/*
- * The order of image creation matters.
- * If you create the playerImage after the mapImage,
- * the player will be drawn behind the map.
- */
-const playerImage = new Image();
-playerImage.src = './Images/playerDown.png';
+import { canvas, ctx, offset } from './data/config.js';
+import { boundaries } from './data/boundariesMapped.js';
+import { keysPressed } from './data/eventListeners.js';
 
 const mapImage = new Image();
 mapImage.src = './Images/map.png';
+
+const playerImage = new Image();
+playerImage.src = './Images/playerDown.png';
+
+const foregroundImage = new Image();
+foregroundImage.src = './Images/foreground.png';
 
 /*
  * Creates a new Player Object
@@ -29,7 +27,6 @@ mapImage.src = './Images/map.png';
 const player = new Player({
   ctx: ctx,
   sprite: playerImage,
-  velocity: 3,
   frames: {
     max: 4
   },
@@ -49,13 +46,29 @@ const startingMap = new Map({
   }
 });
 
+const foregroundMap = new Map({
+  ctx: ctx,
+  sprite: foregroundImage,
+  position: {
+    x: offset.x,
+    y: offset.y
+  }
+});
+
+const backgroundImages = [startingMap, ...boundaries, foregroundMap];
 const animate = () => {
   requestAnimationFrame(animate);
   ctx.clearRect(0, 0, canvas.width, canvas.height);
+  player.enableMovement();
+
   startingMap.draw();
   player.draw();
-  player.enableMovement();
-  movement(keysPressed, player, boundaries);
+  foregroundMap.draw();
+
+  // boundaries.forEach((boundary) => {
+  //   boundary.draw();
+  // });
+  movement(keysPressed, player, backgroundImages, boundaries);
 };
 
 animate();

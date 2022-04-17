@@ -1,19 +1,24 @@
-class Boundary {
+import Map from '../Sprites/Map.js';
+
+class Boundary extends Map {
   static width = 48;
   static height = 48;
 
-  constructor({ ctx, position }) {
+  constructor({ ctx, position, moveUp, moveDown, moveLeft, moveRight }) {
+    super({ moveUp, moveDown, moveLeft, moveRight });
     this.position = position;
     this.ctx = ctx;
+    this.width = Boundary.width;
+    this.height = Boundary.height;
   }
 
   draw() {
-    this.ctx.fillStyle = 'red';
+    this.ctx.fillStyle = 'rgba(255, 0, 0, 0.5)';
     this.ctx.fillRect(
       this.position.x,
       this.position.y,
-      Boundary.width,
-      Boundary.height
+      this.width,
+      this.height
     );
   }
 }
