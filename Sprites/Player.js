@@ -1,28 +1,45 @@
+import { animateBattle } from '../index.js';
+
 class Player {
-  constructor({ ctx, position, frames = { max: 1 }, sprite }) {
+  constructor({ ctx, position, frames = { max: 1 }, sprites, image }) {
     this.position = position;
-    this.frames = frames;
-    this.sprite = sprite;
+    this.frames = { ...frames, value: 0, elapsedFrames: 0 };
+    this.sprites = sprites;
     this.ctx = ctx;
     this.moving = true;
-    this.sprite.onload = () => {
-      this.height = this.sprite.height;
-      this.width = this.sprite.width / this.frames.max;
+    this.image = image;
+    this.image.onload = () => {
+      this.height = this.image.height;
+      this.width = this.image.width / this.frames.max;
     };
+    this.movingAnimation = false;
+    this.battleInitiated = false;
   }
 
-  draw() {
+  draw(animationId) {
+    this.animationloop = animationId;
     this.ctx.drawImage(
-      this.sprite,
+      this.image,
+      this.frames.value * this.width,
       0,
-      0,
-      this.sprite.width / this.frames.max,
-      this.sprite.height,
+      this.image.width / this.frames.max,
+      this.image.height,
       this.position.x,
       this.position.y,
-      this.sprite.width / this.frames.max,
-      this.sprite.height
+      this.image.width / this.frames.max,
+      this.image.height
     );
+
+    if (!this.movingAnimation) return;
+
+    if (this.frames.max > 1) {
+      this.frames.elapsedFrames++;
+    }
+
+    if (this.frames.elapsedFrames % 10 === 0) {
+      if (this.frames.value < this.frames.max - 1) this.frames.value++;
+      else this.frames.value = 0;
+    }
   }
 
   enableMovement() {
@@ -49,11 +66,62 @@ class Player {
     }
   }
 
+  checkBattleZoneCollisions(object) {
+    for (let i = 0; i < object.length; i++) {
+      const battleZone = object[i];
+      const overlapingArea =
+        (Math.min(
+          this.position.x + this.width,
+          battleZone.position.x + battleZone.width
+        ) -
+          Math.max(this.position.x, battleZone.position.x)) *
+        (Math.min(
+          this.position.y + this.height,
+          battleZone.position.y + battleZone.height
+        ) -
+          Math.max(this.position.y, battleZone.position.y));
+
+      if (
+        this.collideWith({
+          ...battleZone,
+          x: battleZone.position.x,
+          y: battleZone.position.y
+        }) &&
+        overlapingArea > (this.width * this.height) / 2
+        // && Math.random() < 0.01
+      ) {
+        console.log('Activating battle');
+        this.battleInitiated = true;
+        // deactivate current animation loop
+        window.cancelAnimationFrame(this.animationloop);
+        gsap.to('.canvas-container--transition', {
+          opacity: 1,
+          duration: 1,
+          onComplete() {
+            gsap.to('.canvas-container--transition', {
+              duration: 1,
+              opacity: 1,
+              onComplete: () => {
+                // activate battle animation
+                animateBattle();
+                gsap.to('.canvas-container--transition', {
+                  duration: 0.4,
+                  opacity: 0
+                });
+              }
+            });
+          }
+        });
+        break;
+      }
+    }
+  }
+
   collideWith(object) {
     return (
       this.position.x < object.x + object.width &&
       this.position.x + this.width > object.x &&
-      this.position.y < object.y + object.height &&
+      this.position.y < object.y + object.height - this.height / 2 &&
       this.position.y + this.height > object.y
     );
   }

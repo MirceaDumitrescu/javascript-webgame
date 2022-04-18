@@ -5,6 +5,6 @@ canvas.width = 1400;
 canvas.height = 1000;
 
 export const offset = {
-  x: -630,
-  y: -410
+  x: -550,
+  y: -400
 };
