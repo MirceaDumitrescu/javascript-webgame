@@ -1,10 +1,14 @@
 export const canvas = document.querySelector('canvas');
 export const ctx = canvas.getContext('2d');
-
-canvas.width = 1400;
-canvas.height = 1000;
+export const pixelSize = parseInt(
+  getComputedStyle(document.documentElement).getPropertyValue('--pixel-size')
+);
+canvas.width = 200 * pixelSize;
+canvas.height = 144 * pixelSize;
 
 export const offset = {
-  x: -550,
-  y: -400
+  x: -110 * pixelSize,
+  y: -90 * pixelSize
 };
+
+console.log(pixelSize);

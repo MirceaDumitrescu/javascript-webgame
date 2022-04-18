@@ -25,10 +25,10 @@ const movement = (
      * Checks movement up
      */
     if (heldDirection === directions.up) {
-      player.checkCollisions(boundaries, { ...direction, y: direction.y + 4 });
+      player.checkBorders(boundaries, { ...direction, y: direction.y + 4 });
       if (player.moving) {
-        backgroundImages.forEach((image) => {
-          image.moveUp();
+        backgroundImages.forEach((backgroundImage) => {
+          backgroundImage.moveUp();
           player.image = player.sprites.up;
           player.movingAnimation = true;
         });
@@ -39,11 +39,11 @@ const movement = (
      * Checks movement down
      */
     if (heldDirection === directions.down) {
-      player.checkCollisions(boundaries, { ...direction, y: direction.y - 4 });
+      player.checkBorders(boundaries, { ...direction, y: direction.y - 4 });
       if (player.moving) {
-        backgroundImages.forEach((image) => {
+        backgroundImages.forEach((backgroundImage) => {
           player.image = player.sprites.down;
-          image.moveDown();
+          backgroundImage.moveDown();
           player.movingAnimation = true;
         });
       }
@@ -53,11 +53,11 @@ const movement = (
      * Checks movement left
      */
     if (heldDirection === directions.left) {
-      player.checkCollisions(boundaries, { ...direction, x: direction.x + 4 });
+      player.checkBorders(boundaries, { ...direction, x: direction.x + 4 });
       if (player.moving) {
-        backgroundImages.forEach((image) => {
+        backgroundImages.forEach((backgroundImage) => {
           player.image = player.sprites.left;
-          image.moveLeft();
+          backgroundImage.moveLeft();
           player.movingAnimation = true;
         });
       }
@@ -67,11 +67,11 @@ const movement = (
      * Checks movement right
      */
     if (heldDirection === directions.right) {
-      player.checkCollisions(boundaries, { ...direction, x: direction.x - 4 });
+      player.checkBorders(boundaries, { ...direction, x: direction.x - 4 });
       if (player.moving) {
-        backgroundImages.forEach((image) => {
+        backgroundImages.forEach((backgroundImage) => {
           player.image = player.sprites.right;
-          image.moveRight();
+          backgroundImage.moveRight();
           player.movingAnimation = true;
         });
       }

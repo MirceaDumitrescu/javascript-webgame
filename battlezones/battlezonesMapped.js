@@ -1,5 +1,5 @@
 import { battlezones } from './battlezones.js';
-import { ctx, offset } from './config.js';
+import { ctx, offset } from '../data/config.js';
 import BattleZone from './Battlezone.js';
 
 let battleZones = [];

@@ -1,31 +1,31 @@
 import Map from './Sprites/Map.js';
 import Player from './Sprites/Player.js';
 import movement from './Movement/movement.js';
-import { canvas, ctx, offset } from './data/config.js';
-import { boundaries } from './data/boundariesMapped.js';
+import { canvas, ctx, offset, pixelSize } from './data/config.js';
+import { boundaries } from './boundaries/boundariesMapped.js';
 import { keysPressed } from './data/eventListeners.js';
-import { battlePatches } from './data/battlezonesMapped.js';
+import { battlePatches } from './battlezones/battlezonesMapped.js';
 
 const mapImage = new Image();
-mapImage.src = './Images/map.png';
+mapImage.src = './assets/Images/map.png';
 
 const playerMovingUp = new Image();
-playerMovingUp.src = './Images/playerUp.png';
+playerMovingUp.src = './assets/Images/playerUp.png';
 
 const playerMovingDown = new Image();
-playerMovingDown.src = './Images/playerDown.png';
+playerMovingDown.src = './assets/Images/playerDown.png';
 
 const playerMovingLeft = new Image();
-playerMovingLeft.src = './Images/playerLeft.png';
+playerMovingLeft.src = './assets/Images/playerLeft.png';
 
 const playerMovingRight = new Image();
-playerMovingRight.src = './Images/playerRight.png';
+playerMovingRight.src = './assets/Images/playerRight.png';
 
 const foregroundImage = new Image();
-foregroundImage.src = './Images/foreground.png';
+foregroundImage.src = './assets/Images/foreground.png';
 
 const battleBackgroundImage = new Image();
-battleBackgroundImage.src = './Images/battleBackground.png';
+battleBackgroundImage.src = './assets/Images/battleArena.png';
 
 /*
  * Creates a new Player Object
@@ -51,10 +51,13 @@ export const player = new Player({
   },
   position: {
     // 192 x 68 represents the size of the player image
-    x: canvas.width / 2 - 192 / 4 / 2,
-    y: canvas.height / 2 - 68 / 2
+    x: canvas.width / 2 - (32 * pixelSize) / 4 / 2,
+    y: canvas.height / 2 - (11 * pixelSize) / 2
   }
 });
+
+console.log(player.position);
+console.log(canvas.width);
 
 const battleBackground = new Map({
   ctx: ctx,

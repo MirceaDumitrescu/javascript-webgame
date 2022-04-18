@@ -1,4 +1,0 @@
-:root {
-    --pixel-size: 2px;
-    --grid-cell: calc(var(--pixel-size) * 16);
-}

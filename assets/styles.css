@@ -1,0 +1,60 @@
+:root {
+    --pixel-size: 6px;
+    --grid-cell: calc(var(--pixel-size) * 16);
+    --bg: #bfb8a3;
+}
+
+@media screen and (max-width: 768px) {
+    :root {
+        --pixel-size: 4px;
+    }
+}
+
+@media screen and (min-width: 1300px) and (max-width: 1440px) {
+    :root {
+        --pixel-size: 6px;
+    }
+}
+
+@media screen and (min-width: 1550px) and (max-width: 1920px) {
+    :root {
+        --pixel-size: 7px;
+    }
+}
+
+@media screen and (min-width: 1950px) {
+    :root {
+        --pixel-size: 8px;
+    }
+}
+
+html, body {
+    height: 100%;
+}
+
+body {
+    background: var(--bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.game-logo {
+    position: absolute;
+    top: -30px;
+    left: -50px;
+    z-index: 100;
+}
+
+.game-logo > img {
+    width: calc(var(--pixel-size) * 40);
+}
+
+.frame {
+    /* This is just for Pen decoration */
+    width: calc(var(--pixel-size) * 200);
+    height: calc(var(--pixel-size) * 144);
+    outline: var(--pixel-size) solid #fff;
+    z-index: 1;
+    position: relative;
+}

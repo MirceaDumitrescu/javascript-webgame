@@ -1,6 +1,6 @@
 import collisions from './collisions.js';
 import Boundary from './Boundary.js';
-import { ctx, offset } from './config.js';
+import { ctx, offset } from '../data/config.js';
 
 let collisionMap = [];
 export const boundaries = [];

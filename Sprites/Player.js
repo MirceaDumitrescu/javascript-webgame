@@ -29,13 +29,15 @@ class Player {
       this.image.width / this.frames.max,
       this.image.height
     );
-
+    // If there is no moving animation, do nothing.
     if (!this.movingAnimation) return;
 
+    // if there is a moving animation, start counting the elapsed frames.
     if (this.frames.max > 1) {
       this.frames.elapsedFrames++;
     }
 
+    // if the elapsed frames is equal to the max frames, reset the frames and start the animation again.
     if (this.frames.elapsedFrames % 10 === 0) {
       if (this.frames.value < this.frames.max - 1) this.frames.value++;
       else this.frames.value = 0;
@@ -50,7 +52,27 @@ class Player {
     this.moving = false;
   }
 
-  checkCollisions(object, direction) {
+  switchMapAnimation(nextAnimation) {
+    gsap.to('.canvas-container--transition', {
+      opacity: 1,
+      duration: 1,
+      onComplete() {
+        gsap.to('.canvas-container--transition', {
+          duration: 1,
+          opacity: 1,
+          onComplete: () => {
+            nextAnimation();
+            gsap.to('.canvas-container--transition', {
+              duration: 0.4,
+              opacity: 0
+            });
+          }
+        });
+      }
+    });
+  }
+
+  checkBorders(object, direction) {
     for (let i = 0; i < object.length; i++) {
       const boundary = object[i];
       if (
@@ -87,31 +109,12 @@ class Player {
           x: battleZone.position.x,
           y: battleZone.position.y
         }) &&
-        overlapingArea > (this.width * this.height) / 2
-        // && Math.random() < 0.01
+        overlapingArea > (this.width * this.height) / 2 &&
+        Math.random() < 0.01
       ) {
-        console.log('Activating battle');
         this.battleInitiated = true;
-        // deactivate current animation loop
         window.cancelAnimationFrame(this.animationloop);
-        gsap.to('.canvas-container--transition', {
-          opacity: 1,
-          duration: 1,
-          onComplete() {
-            gsap.to('.canvas-container--transition', {
-              duration: 1,
-              opacity: 1,
-              onComplete: () => {
-                // activate battle animation
-                animateBattle();
-                gsap.to('.canvas-container--transition', {
-                  duration: 0.4,
-                  opacity: 0
-                });
-              }
-            });
-          }
-        });
+        this.switchMapAnimation(animateBattle);
         break;
       }
     }
