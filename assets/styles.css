@@ -28,6 +28,12 @@
     }
 }
 
+@media screen and (min-width: 2500px) {
+    :root {
+        --pixel-size: 9px;
+    }
+}
+
 html, body {
     height: 100%;
 }

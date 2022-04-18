@@ -1,7 +1,7 @@
 import Map from './Sprites/Map.js';
 import Player from './Sprites/Player.js';
 import movement from './Movement/movement.js';
-import { canvas, ctx, offset, pixelSize } from './data/config.js';
+import { canvas, ctx, offset } from './data/config.js';
 import { boundaries } from './boundaries/boundariesMapped.js';
 import { keysPressed } from './data/eventListeners.js';
 import { battlePatches } from './battlezones/battlezonesMapped.js';
@@ -51,13 +51,10 @@ export const player = new Player({
   },
   position: {
     // 192 x 68 represents the size of the player image
-    x: canvas.width / 2 - (32 * pixelSize) / 4 / 2,
-    y: canvas.height / 2 - (11 * pixelSize) / 2
+    x: 576,
+    y: 398
   }
 });
-
-console.log(player.position);
-console.log(canvas.width);
 
 const battleBackground = new Map({
   ctx: ctx,
@@ -100,11 +97,13 @@ const animate = () => {
   startingMap.draw();
   player.draw(animationId);
   foregroundMap.draw();
+  console.log(startingMap.position);
+  console.log(player.position);
 
   // boundaries.forEach((boundary) => {
   //   boundary.draw();
   // });
-
+  //
   // battlePatches.forEach((battlePatch) => {
   //   battlePatch.draw();
   // });

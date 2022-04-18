@@ -1,8 +1,9 @@
 import Map from '../Sprites/Map.js';
+import { mapZoom } from '../data/config.js';
 
 class Boundary extends Map {
-  static width = 48;
-  static height = 48;
+  static width = mapZoom;
+  static height = mapZoom;
 
   constructor({ ctx, position, moveUp, moveDown, moveLeft, moveRight }) {
     super({ moveUp, moveDown, moveLeft, moveRight });
