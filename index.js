@@ -32,7 +32,7 @@ const player = new Player({
   },
   position: {
     // 192 x 68 represents the size of the player image
-    x: canvas.width / 2 - 192 / 4 / 2,
+    x: canvas.width / 2 - 192 / 2,
     y: canvas.height / 2 - 68 / 2
   }
 });

@@ -1,9 +1,10 @@
 class Map {
-  constructor({ ctx, position, sprite, velocity = 4 }) {
+  static velocity = 4; // pixels per second
+
+  constructor({ ctx, position, sprite }) {
     this.position = position;
     this.sprite = sprite;
     this.ctx = ctx;
-    this.velocity = velocity;
   }
 
   draw() {
@@ -11,19 +12,19 @@ class Map {
   }
 
   moveUp() {
-    this.position.y += this.velocity;
+    this.position.y += Map.velocity;
   }
 
   moveDown() {
-    this.position.y -= this.velocity;
+    this.position.y -= Map.velocity;
   }
 
   moveLeft() {
-    this.position.x += this.velocity;
+    this.position.x += Map.velocity;
   }
 
   moveRight() {
-    this.position.x -= this.velocity;
+    this.position.x -= Map.velocity;
   }
 }
 

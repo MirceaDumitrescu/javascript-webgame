@@ -1,71 +1,62 @@
+import { directions, lastKeyPressed } from '../data/eventListeners.js';
+
 const movement = (keysPressed, player, backgroundImages, boundaries) => {
+  const heldDirection = lastKeyPressed[0];
+  const direction = {
+    x: 0,
+    y: 0
+  };
 
-  
-  /*
-   * Checks movement up
-   */
-
-  if (keysPressed.up) {
-    const direction = {
-      x: 0,
-      y: 3
-    };
-    player.checkCollisions(boundaries, direction);
-    if (player.moving) {
-      backgroundImages.forEach((image) => {
-        image.moveUp();
-      });
+  if (heldDirection) {
+    /*
+     * Checks movement up
+     */
+    if (heldDirection === directions.up) {
+      player.checkCollisions(boundaries, { ...direction, y: direction.y + 4 });
+      if (player.moving) {
+        backgroundImages.forEach((image) => {
+          image.moveUp();
+        });
+      }
     }
-  }
 
-  /*
-   * Checks movement down
-   */
-  if (keysPressed.down) {
-    const direction = {
-      x: 0,
-      y: -3
-    };
-    player.checkCollisions(boundaries, direction);
+    /*
+     * Checks movement down
+     */
+    if (heldDirection === directions.down) {
+      player.checkCollisions(boundaries, { ...direction, y: direction.y - 4 });
 
-    if (player.moving) {
-      backgroundImages.forEach((image) => {
-        image.moveDown();
-      });
+      if (player.moving) {
+        backgroundImages.forEach((image) => {
+          image.moveDown();
+        });
+      }
     }
-  }
 
-  /*
-   * Checks movement left
-   */
-  if (keysPressed.left) {
-    const direction = {
-      x: 3,
-      y: 0
-    };
-    player.checkCollisions(boundaries, direction);
+    /*
+     * Checks movement left
+     */
+    if (heldDirection === directions.left) {
+      player.checkCollisions(boundaries, { ...direction, x: direction.x + 4 });
 
-    if (player.moving) {
-      backgroundImages.forEach((image) => {
-        image.moveLeft();
-      });
+      if (player.moving) {
+        backgroundImages.forEach((image) => {
+          image.moveLeft();
+        });
+      }
     }
-  }
 
-  /*
-   * Checks movement right
-   */
-  if (keysPressed.right) {
-    const direction = {
-      x: -3,
-      y: 0
-    };
-    player.checkCollisions(boundaries, direction);
+    /*
+     * Checks movement right
+     */
+    if (heldDirection === directions.right) {
+      player.checkCollisions(boundaries, { ...direction, x: direction.x - 4 });
 
-    if (player.moving) {
-      backgroundImages.forEach((image) => {
-        image.moveRight();
-      });
+      if (player.moving) {
+        backgroundImages.forEach((image) => {
+          image.moveRight();
+        });
+      }
     }
   }
 };

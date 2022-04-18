@@ -5,36 +5,31 @@ export const keysPressed = {
   right: false
 };
 
+export let lastKeyPressed = [];
+export const directions = {
+  up: 'up',
+  down: 'down',
+  left: 'left',
+  right: 'right'
+};
+const keys = {
+  87: directions.up,
+  65: directions.left,
+  68: directions.right,
+  83: directions.down
+};
+
 window.addEventListener('keydown', (eventKey) => {
-  switch (eventKey.key) {
-    case 'w':
-      keysPressed.up = true;
-      break;
-    case 'a':
-      keysPressed.left = true;
-      break;
-    case 's':
-      keysPressed.down = true;
-      break;
-    case 'd':
-      keysPressed.right = true;
-      break;
+  let dir = keys[eventKey.which];
+  if (dir && lastKeyPressed.indexOf(dir) === -1) {
+    lastKeyPressed.unshift(dir);
   }
 });
 
 window.addEventListener('keyup', (eventKey) => {
-  switch (eventKey.key) {
-    case 'w':
-      keysPressed.up = false;
-      break;
-    case 'a':
-      keysPressed.left = false;
-      break;
-    case 's':
-      keysPressed.down = false;
-      break;
-    case 'd':
-      keysPressed.right = false;
-      break;
+  let dir = keys[eventKey.which];
+  let index = lastKeyPressed.indexOf(dir);
+  if (index > -1) {
+    lastKeyPressed.splice(index, 1);
   }
 });
