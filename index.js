@@ -1,10 +1,9 @@
 import Map from './Sprites/Map.js';
 import Player from './Sprites/Player.js';
-import movement from './Movement/movement.js';
-import { canvas, ctx, offset } from './data/config.js';
-import { boundaries } from './boundaries/boundariesMapped.js';
-import { keysPressed } from './data/eventListeners.js';
-import { battlePatches } from './battlezones/battlezonesMapped.js';
+import { Animation } from './Animation.js';
+import { ctx, offset } from './data/config.js';
+import { collisions } from './boundaries/collisions.js';
+import { battleZones } from './boundaries/battlezones.js';
 
 const mapImage = new Image();
 mapImage.src = './assets/Images/map.png';
@@ -21,11 +20,17 @@ playerMovingLeft.src = './assets/Images/playerLeft.png';
 const playerMovingRight = new Image();
 playerMovingRight.src = './assets/Images/playerRight.png';
 
+const dustParticles = new Image();
+dustParticles.src = './assets/Images/dust_particles_01.png';
+
 const foregroundImage = new Image();
 foregroundImage.src = './assets/Images/foreground.png';
 
 const battleBackgroundImage = new Image();
 battleBackgroundImage.src = './assets/Images/battleArena.png';
+
+const newMap = new Image();
+newMap.src = './assets/Images/map2.png';
 
 /*
  * Creates a new Player Object
@@ -37,20 +42,33 @@ battleBackgroundImage.src = './assets/Images/battleArena.png';
  * @param {sprites} - walking sprite direction
  *
  */
+
+export const trailDust = new Player({
+  ctx: ctx,
+  image: dustParticles,
+  frames: {
+    max: 3
+  },
+  position: {
+    x: 550,
+    y: 465
+  }
+});
+
 export const player = new Player({
   ctx: ctx,
   sprites: {
     up: playerMovingUp,
     left: playerMovingLeft,
     right: playerMovingRight,
-    down: playerMovingDown
+    down: playerMovingDown,
+    trailDust: trailDust
   },
   image: playerMovingDown,
   frames: {
     max: 4
   },
   position: {
-    // 192 x 68 represents the size of the player image
     x: 576,
     y: 398
   }
@@ -74,6 +92,22 @@ const startingMap = new Map({
   }
 });
 
+// this needs to be relative to the player's state [which map he is mainly]
+const map1Boundaries = startingMap.drawBorders(collisions.map1);
+const map1Destinations = startingMap.drawBorders(battleZones.map1);
+
+const secondMap = new Map({
+  ctx: ctx,
+  sprite: newMap,
+  position: {
+    x: offset.x,
+    y: offset.y
+  }
+});
+
+const map2Boundaries = secondMap.drawBorders(collisions.map2);
+const map2Destinations = secondMap.drawBorders(battleZones.map2);
+
 const foregroundMap = new Map({
   ctx: ctx,
   sprite: foregroundImage,
@@ -85,35 +119,28 @@ const foregroundMap = new Map({
 // All the images that have to move to simulate camera movement
 const backgroundImages = [
   startingMap,
-  ...boundaries,
+  secondMap,
+  ...map1Boundaries,
   foregroundMap,
-  ...battlePatches
+  ...map1Destinations
 ];
 
-const animate = () => {
-  const animationId = window.requestAnimationFrame(animate);
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  player.enableMovement();
-  startingMap.draw();
-  player.draw(animationId);
-  foregroundMap.draw();
-  console.log(startingMap.position);
-  console.log(player.position);
+export const destinationMap = new Animation({
+  ctx: ctx,
+  map: secondMap,
+  player: player,
+  mapDestinations: map2Destinations,
+  mapBoundaries: map2Boundaries,
+  backgroundImages: backgroundImages
+});
 
-  // boundaries.forEach((boundary) => {
-  //   boundary.draw();
-  // });
-  //
-  // battlePatches.forEach((battlePatch) => {
-  //   battlePatch.draw();
-  // });
-  movement(keysPressed, player, backgroundImages, boundaries, battlePatches);
-};
+export const gameRunning = new Animation({
+  ctx: ctx,
+  map: startingMap,
+  player: player,
+  mapDestinations: map1Destinations,
+  mapBoundaries: map1Boundaries,
+  backgroundImages: backgroundImages
+});
 
-export const animateBattle = () => {
-  window.requestAnimationFrame(animateBattle);
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  battleBackground.draw();
-};
-
-animate();
+gameRunning.animate();

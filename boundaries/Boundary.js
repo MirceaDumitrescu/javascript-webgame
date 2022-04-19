@@ -1,12 +1,11 @@
-import Map from '../Sprites/Map.js';
 import { mapZoom } from '../data/config.js';
 
-class Boundary extends Map {
+class Boundary {
+  static velocity = 4; // pixels per second
   static width = mapZoom;
   static height = mapZoom;
 
-  constructor({ ctx, position, moveUp, moveDown, moveLeft, moveRight }) {
-    super({ moveUp, moveDown, moveLeft, moveRight });
+  constructor({ ctx, position }) {
     this.position = position;
     this.ctx = ctx;
     this.width = Boundary.width;
@@ -21,6 +20,22 @@ class Boundary extends Map {
       this.width,
       this.height
     );
+  }
+
+  moveUp() {
+    this.position.y += Boundary.velocity;
+  }
+
+  moveDown() {
+    this.position.y -= Boundary.velocity;
+  }
+
+  moveLeft() {
+    this.position.x += Boundary.velocity;
+  }
+
+  moveRight() {
+    this.position.x -= Boundary.velocity;
   }
 }
 

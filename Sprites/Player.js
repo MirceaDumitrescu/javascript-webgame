@@ -1,4 +1,5 @@
-import { animateBattle } from '../index.js';
+import { destinationMap } from '../index.js';
+import { directions, lastKeyPressed } from '../data/eventListeners.js';
 
 class Player {
   constructor({ ctx, position, frames = { max: 1 }, sprites, image }) {
@@ -14,6 +15,11 @@ class Player {
     };
     this.movingAnimation = false;
     this.battleInitiated = false;
+    this.overlap = 0;
+    this.direction = {
+      x: 0,
+      y: 0
+    };
   }
 
   draw(animationId) {
@@ -52,26 +58,6 @@ class Player {
     this.moving = false;
   }
 
-  switchMapAnimation(nextAnimation) {
-    gsap.to('.canvas-container--transition', {
-      opacity: 1,
-      duration: 1,
-      onComplete() {
-        gsap.to('.canvas-container--transition', {
-          duration: 1,
-          opacity: 1,
-          onComplete: () => {
-            nextAnimation();
-            gsap.to('.canvas-container--transition', {
-              duration: 0.4,
-              opacity: 0
-            });
-          }
-        });
-      }
-    });
-  }
-
   checkBorders(object, direction) {
     for (let i = 0; i < object.length; i++) {
       const boundary = object[i];
@@ -88,20 +74,25 @@ class Player {
     }
   }
 
-  checkBattleZoneCollisions(object) {
+  getOverlapValue(object) {
+    this.overlap =
+      (Math.min(
+        this.position.x + this.width,
+        object.position.x + object.width
+      ) -
+        Math.max(this.position.x, object.position.x)) *
+      (Math.min(
+        this.position.y + this.height,
+        object.position.y + object.height
+      ) -
+        Math.max(this.position.y, object.position.y));
+    return this.overlap;
+  }
+
+  checkLocationOverlap(object) {
     for (let i = 0; i < object.length; i++) {
       const battleZone = object[i];
-      const overlapingArea =
-        (Math.min(
-          this.position.x + this.width,
-          battleZone.position.x + battleZone.width
-        ) -
-          Math.max(this.position.x, battleZone.position.x)) *
-        (Math.min(
-          this.position.y + this.height,
-          battleZone.position.y + battleZone.height
-        ) -
-          Math.max(this.position.y, battleZone.position.y));
+      const overlapValue = this.getOverlapValue(battleZone);
 
       if (
         this.collideWith({
@@ -109,15 +100,42 @@ class Player {
           x: battleZone.position.x,
           y: battleZone.position.y
         }) &&
-        overlapingArea > (this.width * this.height) / 2 &&
-        Math.random() < 0.01
+        overlapValue > (this.width * this.height) / 2
+        // && Math.random() < 0.01
       ) {
+        console.log('switching maps');
         this.battleInitiated = true;
-        window.cancelAnimationFrame(this.animationloop);
-        this.switchMapAnimation(animateBattle);
+        this.stopAnimation(this.animationloop);
+        this.switchMapAnimation(destinationMap);
         break;
       }
     }
+  }
+
+  stopAnimation(animationId) {
+    cancelAnimationFrame(animationId);
+  }
+
+  switchMapAnimation(destinationMap) {
+    this.battleInitiated = false;
+    gsap.to('.canvas-container--transition', {
+      opacity: 1,
+      duration: 1,
+      onComplete() {
+        gsap.to('.canvas-container--transition', {
+          duration: 1,
+          opacity: 1,
+          onComplete: () => {
+            destinationMap.animate();
+            console.log('finishing animation');
+            gsap.to('.canvas-container--transition', {
+              duration: 0.4,
+              opacity: 0
+            });
+          }
+        });
+      }
+    });
   }
 
   collideWith(object) {
@@ -127,6 +145,90 @@ class Player {
       this.position.y < object.y + object.height - this.height / 2 &&
       this.position.y + this.height > object.y
     );
+  }
+
+  showTrailDust() {}
+
+  move(mapDestinations, mapBoundaries, backgroundImages) {
+    this.heldDirection = lastKeyPressed[0];
+    if (this.battleInitiated) {
+      this.movingAnimation = false;
+      return;
+    }
+    if (this.heldDirection) {
+      this.checkLocationOverlap(mapDestinations);
+
+      /*
+       * Checks movement up
+       */
+      if (this.heldDirection === directions.up) {
+        this.checkBorders(mapBoundaries, {
+          ...this.direction,
+          y: this.direction.y + 4
+        });
+        if (this.moving) {
+          backgroundImages.forEach((backgroundImage) => {
+            backgroundImage.moveUp();
+            this.image = this.sprites.up;
+            this.movingAnimation = true;
+          });
+        }
+      }
+
+      /*
+       * Checks movement down
+       */
+      if (this.heldDirection === directions.down) {
+        this.checkBorders(mapBoundaries, {
+          ...this.direction,
+          y: this.direction.y - 4
+        });
+        if (this.moving) {
+          backgroundImages.forEach((backgroundImage) => {
+            this.image = this.sprites.down;
+            backgroundImage.moveDown();
+            this.movingAnimation = true;
+          });
+        }
+      }
+
+      /*
+       * Checks movement left
+       */
+      if (this.heldDirection === directions.left) {
+        this.checkBorders(mapBoundaries, {
+          ...this.direction,
+          x: this.direction.x + 4
+        });
+        if (this.moving) {
+          backgroundImages.forEach((backgroundImage) => {
+            this.image = this.sprites.left;
+            backgroundImage.moveLeft();
+            this.movingAnimation = true;
+          });
+        }
+      }
+
+      /*
+       * Checks movement right
+       */
+      if (this.heldDirection === directions.right) {
+        this.checkBorders(mapBoundaries, {
+          ...this.direction,
+          x: this.direction.x - 4
+        });
+        if (this.moving) {
+          backgroundImages.forEach((backgroundImage) => {
+            this.image = this.sprites.right;
+            // this.sprites.trailDust.draw();
+            backgroundImage.moveRight();
+            this.movingAnimation = true;
+          });
+        }
+      }
+    } else {
+      this.movingAnimation = false;
+    }
   }
 }
 
