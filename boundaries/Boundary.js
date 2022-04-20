@@ -5,11 +5,12 @@ class Boundary {
   static width = mapZoom;
   static height = mapZoom;
 
-  constructor({ ctx, position }) {
+  constructor({ ctx, position, destination }) {
     this.position = position;
     this.ctx = ctx;
     this.width = Boundary.width;
     this.height = Boundary.height;
+    this.destination = destination;
   }
 
   draw() {

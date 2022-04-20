@@ -16,7 +16,7 @@ class Map {
     this.ctx.drawImage(this.sprite, this.position.x, this.position.y);
   }
 
-  drawBorders(collisions) {
+  drawBorders(collisions, locationName) {
     this.collisionMap = [];
     this.boundaries = [];
     for (let i = 0; i < collisions.length; i += 70) {
@@ -32,7 +32,8 @@ class Map {
                 x: j * Boundary.width + offset.x,
                 y: i * Boundary.height + offset.y
               },
-              ctx: ctx
+              ctx: ctx,
+              destination: locationName
             })
           );
       });

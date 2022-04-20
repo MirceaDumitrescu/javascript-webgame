@@ -1,4 +1,3 @@
-import { destinationMap } from '../index.js';
 import { directions, lastKeyPressed } from '../data/eventListeners.js';
 
 class Player {
@@ -90,25 +89,20 @@ class Player {
   }
 
   checkLocationOverlap(object) {
-    for (let i = 0; i < object.length; i++) {
-      const battleZone = object[i];
-      const overlapValue = this.getOverlapValue(battleZone);
+    const overlapValue = this.getOverlapValue(object);
 
-      if (
-        this.collideWith({
-          ...battleZone,
-          x: battleZone.position.x,
-          y: battleZone.position.y
-        }) &&
-        overlapValue > (this.width * this.height) / 2
-        // && Math.random() < 0.01
-      ) {
-        console.log('switching maps');
-        this.battleInitiated = true;
-        this.stopAnimation(this.animationloop);
-        this.switchMapAnimation(destinationMap);
-        break;
-      }
+    if (
+      this.collideWith({
+        ...object,
+        x: object.position.x,
+        y: object.position.y
+      }) &&
+      overlapValue > (this.width * this.height) / 2
+      // && Math.random() < 0.01
+    ) {
+      this.battleInitiated = true;
+      this.stopAnimation(this.animationloop);
+      this.switchMapAnimation(object.destination);
     }
   }
 
@@ -126,6 +120,7 @@ class Player {
           duration: 1,
           opacity: 1,
           onComplete: () => {
+            destinationMap.setMapMarkers();
             destinationMap.animate();
             console.log('finishing animation');
             gsap.to('.canvas-container--transition', {
@@ -149,14 +144,16 @@ class Player {
 
   showTrailDust() {}
 
-  move(mapDestinations, mapBoundaries, backgroundImages) {
+  move(destinations, mapBoundaries, backgroundImages) {
     this.heldDirection = lastKeyPressed[0];
     if (this.battleInitiated) {
       this.movingAnimation = false;
       return;
     }
     if (this.heldDirection) {
-      this.checkLocationOverlap(mapDestinations);
+      destinations.forEach((destination) => {
+        this.checkLocationOverlap(destination);
+      });
 
       /*
        * Checks movement up
