@@ -41,8 +41,22 @@ html, body {
 body {
     background: var(--bg);
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
+}
+
+.menu-buttons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: calc(var(--grid-cell) * 2);
+
+}
+
+.zoom-in-button, .zoom-out-button {
+    border: 2px solid red;
+    cursor: pointer;
 }
 
 .game-logo {
@@ -64,3 +78,4 @@ body {
     z-index: 1;
     position: relative;
 }
+

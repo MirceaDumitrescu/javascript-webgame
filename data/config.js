@@ -16,8 +16,8 @@ canvas.width = 200 * pixelSize;
 canvas.height = 144 * pixelSize;
 
 export const offset = {
-  x: -1300,
-  y: -1000
+  x: -1300 + canvas.width,
+  y: -1000 + canvas.height
 };
 
 export const mapZoom = 72;

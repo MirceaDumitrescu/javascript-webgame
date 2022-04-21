@@ -1,8 +1,12 @@
 // const fetchApi = async () => {
-//   const response = await fetch('http://localhost:5050/');
-//   const data = await response.json();
-//   console.log(data);
-//   return data;
+//   try {
+//     const response = await fetch('http://localhost:5050/');
+//     console.log(response);
+//     const data = await response.json();
+//     console.log(data);
+//   } catch (error) {
+//     console.log(error);
+//   }
 // };
 //
 // const gameLoaded = fetchApi();

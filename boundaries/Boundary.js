@@ -1,9 +1,5 @@
-import { mapZoom } from '../data/config.js';
-
 class Boundary {
   static velocity = 4; // pixels per second
-  static width = mapZoom;
-  static height = mapZoom;
 
   constructor({ ctx, position, destination }) {
     this.position = position;

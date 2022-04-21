@@ -13,17 +13,14 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 // use cors
 
-const loadedMap = fs.readFile('./assets/Images/map.png', (err, data) => {
-  const map = new Canvas.Image();
-  map.src = data;
-  return map;
-});
+const imageMap: any = fs.readFileSync('../assets/Images/map.png');
 
-console.log(loadedMap);
+const img = new Canvas.Image();
+img.src = imageMap;
 
 app.get('/', async (req: Request, res: Response): Promise<Response> => {
   return res.status(200).send({
-    message: loadedMap
+    message: img
   });
 });
 

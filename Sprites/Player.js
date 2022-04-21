@@ -31,8 +31,8 @@ class Player {
       this.image.height,
       this.position.x,
       this.position.y,
-      (this.image.width / this.frames.max) * 1.25,
-      this.image.height * 1.25
+      this.image.width / this.frames.max,
+      this.image.height
     );
     // If there is no moving animation, do nothing.
     if (!this.movingAnimation) return;

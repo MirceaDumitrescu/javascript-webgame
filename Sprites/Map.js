@@ -4,12 +4,45 @@ import { ctx, offset } from '../data/config.js';
 class Map {
   static velocity = 4; // pixels per second
 
-  constructor({ ctx, position, sprite }) {
+  constructor({ ctx, position, sprite, zoom3x, zoom2x, zoom1x, spriteSource }) {
     this.position = position;
-    this.sprite = sprite;
+    this.sprite = zoom1x;
+    this.zoom3x = zoom3x;
+    this.zoom2x = zoom2x;
+    this.zoom1x = zoom1x;
+    // this.sprite.src = spriteSource;
     this.ctx = ctx;
     this.collisionMap = [];
     this.boundaries = [];
+  }
+
+  zoomOut(zoomLevel) {
+    console.log(this.sprite);
+    console.log(zoomLevel);
+    if (zoomLevel === 2) {
+      console.log('first zoom in');
+      console.log(zoomLevel);
+      this.sprite = this.zoom2x;
+    } else if (zoomLevel === 1) {
+      console.log('last zoomOut');
+      console.log(zoomLevel);
+      this.sprite = this.zoom1x;
+    } else {
+      console.log('zoomOut');
+      console.log(zoomLevel);
+    }
+  }
+
+  zoomIn(zoomLevel) {
+    console.log(this.sprite);
+    console.log(zoomLevel);
+    if (zoomLevel === 1) {
+      this.sprite = this.zoom2x;
+    } else if (zoomLevel === 2) {
+      this.sprite = this.zoom3x;
+    } else if (zoomLevel === 3) {
+      this.sprite = this.zoom3x;
+    }
   }
 
   draw() {
