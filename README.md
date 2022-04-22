@@ -15,11 +15,11 @@ Add Description Here...
 
 > To be discussed
 
-- [ ] Downloads and Setup
-- [ ] Find Assets (Theme)
-- [ ] Download Tiles
-- [ ] Import into Project
-- [ ] Create game design file
+- [X] Downloads and Setup
+- [X] Find Assets (Theme)
+- [X] Download Tiles
+- [X] Import into Project
+- [X] Create game design file
 - [ ] Tile Layering for all maps
 - [ ] Map details and placement of props
 - [ ] Foreground Layers & Collisions
@@ -28,10 +28,10 @@ Add Description Here...
 ### Game Design
 
 > To be discussed
-- [ ] Theme of the game
+- [X] Theme of the game
 - [ ] Basic functionalities
-- [ ] Scope of game
-- [ ] Sprint intervals
+- [X] Scope of game
+- [X] Sprint intervals
 - [ ] Team Management & Taks Allocation
 - [ ] Storyline ?
 - [ ] v1.0 requirments
