@@ -1,12 +1,12 @@
 import Boundary from '../boundaries/Boundary.js';
-import { ctx, offset } from '../data/config.js';
+import { ctx } from '../data/config.js';
+import { zoomLevel } from '../data/eventListeners.js';
 
 class Map {
   static velocity = 4; // pixels per second
 
-  constructor({ ctx, position, sprite, zoom3x, zoom2x, zoom1x, spriteSource }) {
-    this.position = position;
-    this.sprite = zoom1x;
+  constructor({ ctx, zoom3x, zoom2x, zoom1x, spriteSource }) {
+    this.sprite = zoom3x;
     this.zoom3x = zoom3x;
     this.zoom2x = zoom2x;
     this.zoom1x = zoom1x;
@@ -14,39 +14,47 @@ class Map {
     this.ctx = ctx;
     this.collisionMap = [];
     this.boundaries = [];
+    this.zoomLevel = 3;
+    this.boundaryWidth = 72;
+    this.boundaryHeight = 72;
+    this.offsetX = -1300;
+    this.offsetY = -1000;
   }
 
-  zoomOut(zoomLevel) {
-    console.log(this.sprite);
-    console.log(zoomLevel);
+  zoomOut() {
     if (zoomLevel === 2) {
-      console.log('first zoom in');
-      console.log(zoomLevel);
+      this.boundaryWidth = this.boundaryWidth - 12;
+      this.boundaryHeight = this.boundaryHeight - 12;
+      this.offsetX = this.offsetX - this.offsetX / 4;
+      this.offsetY = this.offsetY - this.offsetY / 4;
       this.sprite = this.zoom2x;
     } else if (zoomLevel === 1) {
-      console.log('last zoomOut');
-      console.log(zoomLevel);
+      this.boundaryWidth = this.boundaryWidth - 12;
+      this.boundaryHeight = this.boundaryHeight - 12;
+      this.offsetX = this.offsetX - this.offsetX / 3;
+      this.offsetY = this.offsetY - this.offsetY / 3;
       this.sprite = this.zoom1x;
-    } else {
-      console.log('zoomOut');
-      console.log(zoomLevel);
     }
   }
 
-  zoomIn(zoomLevel) {
-    console.log(this.sprite);
-    console.log(zoomLevel);
-    if (zoomLevel === 1) {
+  zoomIn() {
+    if (zoomLevel === 2) {
+      this.boundaryWidth = this.boundaryWidth + 12;
+      this.boundaryHeight = this.boundaryHeight + 12;
+      this.offsetX = this.offsetX + this.offsetX / 2;
+      this.offsetY = this.offsetY + this.offsetY / 2;
       this.sprite = this.zoom2x;
-    } else if (zoomLevel === 2) {
-      this.sprite = this.zoom3x;
     } else if (zoomLevel === 3) {
+      this.boundaryWidth = this.boundaryWidth + 12;
+      this.boundaryHeight = this.boundaryHeight + 12;
+      this.offsetX = this.offsetX + this.offsetX / 3;
+      this.offsetY = this.offsetY + this.offsetY / 3;
       this.sprite = this.zoom3x;
     }
   }
 
   draw() {
-    this.ctx.drawImage(this.sprite, this.position.x, this.position.y);
+    this.ctx.drawImage(this.sprite, this.offsetX, this.offsetY);
   }
 
   drawBorders(collisions, locationName) {
@@ -61,9 +69,11 @@ class Map {
         if (symbol === 1025)
           this.boundaries.push(
             new Boundary({
+              height: this.boundaryHeight,
+              width: this.boundaryWidth,
               position: {
-                x: j * Boundary.width + offset.x,
-                y: i * Boundary.height + offset.y
+                x: j * this.boundaryWidth + this.offsetX,
+                y: i * this.boundaryHeight + this.offsetY
               },
               ctx: ctx,
               destination: locationName
@@ -75,19 +85,19 @@ class Map {
   }
 
   moveUp() {
-    this.position.y += Map.velocity;
+    this.offsetY += Map.velocity;
   }
 
   moveDown() {
-    this.position.y -= Map.velocity;
+    this.offsetY -= Map.velocity;
   }
 
   moveLeft() {
-    this.position.x += Map.velocity;
+    this.offsetX += Map.velocity;
   }
 
   moveRight() {
-    this.position.x -= Map.velocity;
+    this.offsetX -= Map.velocity;
   }
 }
 

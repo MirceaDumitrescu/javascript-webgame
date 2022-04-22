@@ -1,22 +1,5 @@
 import Map from '../Sprites/Map.js';
-import { ctx, offset } from '../data/config.js';
-
-const zoomLevel = 3;
-
-// switch (zoomLevel) {
-//   case 1:
-//     const map = new Map(ctx, offset, '../../assets/maps/map1.png');
-//     break;
-//   case 2:
-//     const map = new Map(ctx, offset, '../../assets/maps/map2.png');
-//     break;
-//   case 3:
-//     const map = new Map(ctx, offset, '../../assets/maps/map3.png');
-//     break;
-//   default:
-//     const map = new Map(ctx, offset, '../../assets/maps/map1.png');
-//     break;
-// }
+import {ctx, offset} from '../data/config.js';
 
 // const mapImage = new Image();
 // mapImage.src = './assets/Images/map.png';
@@ -49,12 +32,12 @@ export const startingMap = new Map({
   // sprite: mapImage,
   zoom1x: map1x,
   zoom2x: map2x,
-  zoom3x: map3x,
+  zoom3x: map3x
   // spriteSource: '../assets/Images/map.png',
-  position: {
-    x: offset.x,
-    y: offset.y
-  }
+  // position: {
+  //   x: offset.x,
+  //   y: offset.y
+  // }
 });
 
 export const secondMap = new Map({
@@ -71,9 +54,9 @@ export const foregroundMap = new Map({
   // sprite: foregroundImage,
   zoom3x: f13x,
   zoom2x: f12x,
-  zoom1x: f11x,
-  position: {
-    x: offset.x,
-    y: offset.y
-  }
+  zoom1x: f11x
+  // position: {
+  //   x: offset.x,
+  //   y: offset.y
+  // }
 });

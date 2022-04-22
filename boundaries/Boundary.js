@@ -1,11 +1,11 @@
 class Boundary {
   static velocity = 4; // pixels per second
 
-  constructor({ ctx, position, destination }) {
+  constructor({ ctx, position, destination, height, width }) {
     this.position = position;
     this.ctx = ctx;
-    this.width = Boundary.width;
-    this.height = Boundary.height;
+    this.width = width;
+    this.height = height;
     this.destination = destination;
   }
 

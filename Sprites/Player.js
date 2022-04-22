@@ -1,4 +1,8 @@
-import { directions, lastKeyPressed } from '../data/eventListeners.js';
+import {
+  directions,
+  lastKeyPressed,
+  zoomLevel
+} from '../data/eventListeners.js';
 
 class Player {
   constructor({ ctx, position, frames = { max: 1 }, sprites, image }) {
@@ -21,7 +25,35 @@ class Player {
     };
   }
 
+  setImageDimensions() {
+    if (zoomLevel === 2) {
+      this.drawWidth = (this.image.width / this.frames.max) * 0.85;
+      this.drawHeight = this.image.height * 0.85;
+    } else if (zoomLevel === 1) {
+      this.drawWidth = (this.image.width / this.frames.max) * 0.75;
+      this.drawHeight = this.image.height * 0.75;
+    } else {
+      this.drawWidth = this.image.width / this.frames.max;
+      this.drawHeight = this.image.height;
+    }
+  }
+
+  setPosition() {
+    if (zoomLevel === 2) {
+      this.position.x = 587;
+      this.position.y = 408;
+    } else if (zoomLevel === 1) {
+      this.position.x = 590;
+      this.position.y = 420;
+    } else {
+      this.position.x = 576;
+      this.position.y = 398;
+    }
+  }
+
   draw(animationId) {
+    this.setImageDimensions();
+    this.setPosition();
     this.animationloop = animationId;
     this.ctx.drawImage(
       this.image,
@@ -31,8 +63,8 @@ class Player {
       this.image.height,
       this.position.x,
       this.position.y,
-      this.image.width / this.frames.max,
-      this.image.height
+      this.drawWidth,
+      this.drawHeight
     );
     // If there is no moving animation, do nothing.
     if (!this.movingAnimation) return;

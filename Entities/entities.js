@@ -22,24 +22,24 @@ const playerMovingLeft = new Image();
 playerMovingLeft.src = './assets/Images/playerLeft.png';
 
 const playerMovingRight = new Image();
-playerMovingRight.src = './assets/Images/run/warrior-run.png';
+playerMovingRight.src = './assets/Images/playerRight.png';
 
-const dustParticles = new Image();
-dustParticles.src = './assets/Images/dust_particles_01.png';
+// const dustParticles = new Image();
+// dustParticles.src = './assets/Images/dust_particles_01.png';
 
-const runAnimation = new Image();
-
-export const trailDust = new Player({
-  ctx: ctx,
-  image: dustParticles,
-  frames: {
-    max: 3
-  },
-  position: {
-    x: 550,
-    y: 465
-  }
-});
+// const runAnimation = new Image();
+//
+// export const trailDust = new Player({
+//   ctx: ctx,
+//   image: dustParticles,
+//   frames: {
+//     max: 3
+//   },
+//   position: {
+//     x: 550,
+//     y: 465
+//   }
+// });
 
 export const player = new Player({
   ctx: ctx,
@@ -47,12 +47,11 @@ export const player = new Player({
     up: playerMovingUp,
     left: playerMovingLeft,
     right: playerMovingRight,
-    down: playerMovingDown,
-    trailDust: trailDust
+    down: playerMovingDown
   },
   image: playerMovingRight,
   frames: {
-    max: 8
+    max: 4
   },
   position: {
     x: 576,
