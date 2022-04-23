@@ -10,7 +10,7 @@
  */
 
 import Player from '../Sprites/Player.js';
-import {ctx} from '../data/config.js';
+import { ctx } from '../data/config.js';
 
 const playerMovingUp = new Image();
 playerMovingUp.src = './assets/Images/playerUp.png';

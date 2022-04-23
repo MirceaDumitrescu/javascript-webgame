@@ -54,6 +54,31 @@ export const gameRun = () => {
       }
     });
 
+    window.addEventListener('keydown', (eventKey) => {
+      if (
+        (eventKey.ctrlKey == true || eventKey.metaKey == true) &&
+        (eventKey.which == '61' ||
+          eventKey.which == '107' ||
+          eventKey.which == '173' ||
+          eventKey.which == '109' ||
+          eventKey.which == '187' ||
+          eventKey.which == '189')
+      ) {
+        console.log('here');
+        eventKey.preventDefault();
+      }
+      // 107 Num Key  +
+      // 109 Num Key  -
+      // 173 Min Key  hyphen/underscore key
+      // 61 Plus key  +/= key
+    });
+
+    window.addEventListener('mousewheel DOMMouseScroll', (event) => {
+      if (event.ctrlKey == true) {
+        event.preventDefault();
+      }
+    });
+
     gameRunning.setMapMarkers(getMapMarkers());
     gameRunning.animate();
   });

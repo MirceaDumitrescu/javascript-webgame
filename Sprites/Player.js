@@ -6,7 +6,10 @@ import {
 
 class Player {
   constructor({ ctx, position, frames = { max: 1 }, sprites, image }) {
-    this.position = position;
+    this.position = {
+      x: 876,
+      y: 398
+    };
     this.frames = { ...frames, value: 0, elapsedFrames: 0 };
     this.sprites = sprites;
     this.ctx = ctx;
@@ -38,23 +41,24 @@ class Player {
     }
   }
 
-  setPosition() {
-    if (zoomLevel === 2) {
-      this.position.x = 587;
-      this.position.y = 408;
-    } else if (zoomLevel === 1) {
-      this.position.x = 590;
-      this.position.y = 420;
-    } else {
-      this.position.x = 576;
-      this.position.y = 398;
-    }
-  }
+  // setPosition() {
+  //   if (zoomLevel === 2) {
+  //     this.position.x = 887;
+  //     this.position.y = 408;
+  //   } else if (zoomLevel === 1) {
+  //     this.position.x = 890;
+  //     this.position.y = 420;
+  //   } else {
+  //     this.position.x = 876;
+  //     this.position.y = 398;
+  //   }
+  // }
 
   draw(animationId) {
+    console.log(this.position.y);
     this.setImageDimensions();
-    this.setPosition();
-    this.animationloop = animationId;
+    // this.setPosition();
+    this.animationLoop = animationId;
     this.ctx.drawImage(
       this.image,
       this.frames.value * this.width,
@@ -133,7 +137,7 @@ class Player {
       // && Math.random() < 0.01
     ) {
       this.battleInitiated = true;
-      this.stopAnimation(this.animationloop);
+      this.stopAnimation(this.animationLoop);
       this.switchMapAnimation(object.destination);
     }
   }
@@ -196,11 +200,12 @@ class Player {
           y: this.direction.y + 4
         });
         if (this.moving) {
-          backgroundImages.forEach((backgroundImage) => {
-            backgroundImage.moveUp();
-            this.image = this.sprites.up;
-            this.movingAnimation = true;
-          });
+          this.position.y -= 4;
+          this.image = this.sprites.up;
+          this.movingAnimation = true;
+          // backgroundImages.forEach((backgroundImage) => {
+          // backgroundImage.moveUp();
+          // });
         }
       }
 
@@ -213,11 +218,14 @@ class Player {
           y: this.direction.y - 4
         });
         if (this.moving) {
-          backgroundImages.forEach((backgroundImage) => {
-            this.image = this.sprites.down;
-            backgroundImage.moveDown();
-            this.movingAnimation = true;
-          });
+          this.position.y += 4;
+          this.image = this.sprites.down;
+          this.movingAnimation = true;
+          // backgroundImages.forEach((backgroundImage) => {
+          //   this.image = this.sprites.down;
+          //   backgroundImage.moveDown();
+          //   this.movingAnimation = true;
+          // });
         }
       }
 
@@ -230,11 +238,14 @@ class Player {
           x: this.direction.x + 4
         });
         if (this.moving) {
-          backgroundImages.forEach((backgroundImage) => {
-            this.image = this.sprites.left;
-            backgroundImage.moveLeft();
-            this.movingAnimation = true;
-          });
+          this.position.x -= 4;
+          this.image = this.sprites.left;
+          this.movingAnimation = true;
+          // backgroundImages.forEach((backgroundImage) => {
+          //   this.image = this.sprites.left;
+          //   backgroundImage.moveLeft();
+          //   this.movingAnimation = true;
+          // });
         }
       }
 
@@ -247,12 +258,15 @@ class Player {
           x: this.direction.x - 4
         });
         if (this.moving) {
-          backgroundImages.forEach((backgroundImage) => {
-            this.image = this.sprites.right;
-            // this.sprites.trailDust.draw();
-            backgroundImage.moveRight();
-            this.movingAnimation = true;
-          });
+          this.position.x += 4;
+          this.image = this.sprites.right;
+          this.movingAnimation = true;
+          // backgroundImages.forEach((backgroundImage) => {
+          //   this.image = this.sprites.right;
+          //   // this.sprites.trailDust.draw();
+          //   backgroundImage.moveRight();
+          //   this.movingAnimation = true;
+          // });
         }
       }
     } else {
