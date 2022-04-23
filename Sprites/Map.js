@@ -5,7 +5,7 @@ import { zoomLevel } from '../data/eventListeners.js';
 class Map {
   static velocity = 4; // pixels per second
 
-  constructor({ ctx, zoom3x, zoom2x, zoom1x, spriteSource }) {
+  constructor({ ctx, zoom3x, zoom2x, zoom1x }) {
     this.sprite = zoom3x;
     this.zoom3x = zoom3x;
     this.zoom2x = zoom2x;
@@ -17,7 +17,7 @@ class Map {
     this.zoomLevel = 3;
     this.boundaryWidth = 72;
     this.boundaryHeight = 72;
-    this.offsetX = -1300;
+    this.offsetX = -1000;
     this.offsetY = -1000;
   }
 
